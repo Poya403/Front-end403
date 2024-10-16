@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>چراغ راهنمایی رانندگی</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+        }
+
+        .traffic-light {
+            width: 100px;
+            height: 300px;
+            background-color: black;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .light {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #555; /* رنگ خاموش */
+            transition: background-color 0.5s; /* انتقال نرم رنگ */
+        }
+
+        .red {
+            background-color: red; /* رنگ قرمز */
+        }
+
+        .yellow {
+            background-color: yellow; /* رنگ زرد */
+        }
+
+        .green {
+            background-color: green; /* رنگ سبز */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="traffic-light">
+        <div id="red" class="light"></div>
+        <div id="yellow" class="light"></div>
+        <div id="green" class="light"></div>
+    </div>
+
+    <script>
+        // تابع برای روشن کردن چراغ‌ها
+        function changeLight() {
+            const redLight = document.getElementById("red");
+            const yellowLight = document.getElementById("yellow");
+            const greenLight = document.getElementById("green");
+
+            // چرخه روشن و خاموش کردن چراغ‌ها
+            setTimeout(() => {
+                redLight.classList.add("red");
+                yellowLight.classList.remove("yellow");
+                greenLight.classList.remove("green");
+            }, 0); // قرمز روشن
+
+            setTimeout(() => {
+                redLight.classList.remove("red");
+                yellowLight.classList.add("yellow");
+                greenLight.classList.remove("green");
+            }, 3000); // زرد روشن بعد از 3 ثانیه
+
+            setTimeout(() => {
+                redLight.classList.remove("red");
+                yellowLight.classList.remove("yellow");
+                greenLight.classList.add("green");
+            }, 4000); // سبز روشن بعد از 1 ثانیه
+
+            setTimeout(changeLight, 7000); // دوباره شروع چرخه بعد از 7 ثانیه
+        }
+
+        // شروع چرخه نورها
+        changeLight();
+    </script>
+
+</body>
+</html>

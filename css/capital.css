@@ -1,0 +1,29 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+div{
+    width:100%;
+    overflow:auto;
+}
+#text1{
+    padding-bottom: 50px;
+}
+#img1{
+    width: 50%;
+    float: left
+}
+#table1{
+    width: 50%;
+    float: right;
+}
+table,th,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th,td{
+    padding: 7px;
+    text-align: right;
+}
+tr:nth-child(odd){
+    background-color:rgba(211, 211, 211, 0.474);
+}
