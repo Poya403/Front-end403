@@ -1,3 +1,32 @@
-.padding-100{
-    padding-top: 100px;
+.defualt_padding{
+    padding: 25vmin;
+}
+/* PC display */
+@media(min-width:700px){
+    .top_navbar{
+        box-shadow: none !important;
+    }
+    .add_btn{
+        padding-right: 2.5vw;
+        padding-top: 10vh;
+    }
+    .c_small{
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+        margin-top: 15px;
+        margin-bottom: -7px;
+    }
+}
+
+
+/* moblie display */
+@media(max-width:600px){
+    .top_navbar{
+        box-shadow: none !important;
+    }
+    .add_btn{
+        padding-right: 2.5vw;
+        padding-top: 25vh;
+    }
 }
