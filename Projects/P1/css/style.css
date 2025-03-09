@@ -1,0 +1,51 @@
+*{
+    direction: rtl;
+}
+.rtl-icons{
+    margin: 0 0 0 25px;
+}
+.add_user_modal_back{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.add_user_modal{
+    width: 100%;
+    height: 50vh;
+    position: fixed;
+    background-color:white;
+    bottom: 0;
+    z-index: 1000;
+    border-radius: 30px 30px 0 0;
+    left: 0;
+    right: 0;
+    bottom:-70vh;
+}
+.add_user_modal.show{
+    box-shadow: 0 0 10px gray;
+    bottom: 0;
+}
+/* PC display */
+@media(min-width:700px){
+    .top_navbar{
+        box-shadow: none !important;
+    }
+    .c_small{
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+        margin-top: 15px;
+        margin-bottom: -7px;
+    }
+}
+
+/* moblie display */
+@media(max-width:600px){
+    .top_navbar{
+        box-shadow: none !important;
+    }
+}

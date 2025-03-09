@@ -6,10 +6,6 @@
     .top_navbar{
         box-shadow: none !important;
     }
-    .add_btn{
-        padding-right: 2.5vw;
-        padding-top: 10vh;
-    }
     .c_small{
         width: 30px;
         height: 30px;
@@ -25,8 +21,29 @@
     .top_navbar{
         box-shadow: none !important;
     }
-    .add_btn{
-        padding-right: 2.5vw;
-        padding-top: 25vh;
+    #Add user{
+        display: flex !important;
+        align-items: center !important;
     }
+}
+.div{
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding: 10px;
+}
+.p-10{
+    padding: 10px;
+}
+.m-30{
+    margin: 30px;
+}
+.pos-rel{
+    position: relative;
+}
+.top-7{
+    top:7px
+}
+.float-right{
+    float: right;
 }

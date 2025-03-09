@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize-rtl.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/defclass.css">
+</head>
+<body dir="rtl" x-data="usersdata">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="materialize/js/materialize.min.js"></script>
+    <script src="materialize/js/materialize.js"></script>
+    <script src="JS/app.js"></script>
+    <script src="Js/users.js"></script>
+    <script src="Js/usersController.js"></script>
+    <!-- PC display -->
+    <nav class="blue darken-1 top_navbar">
+        <div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger right">
+              <i class="material-icons"><span class="mobile-text rtl-icons">مدیریت کاربران</span> menu</i>
+            </a>
+            <ul class="hide-on-med-and-down right display-flex">
+                <li><a href="Users.html"><img class="responsive-img circle c_small" src="images/Person.png"></a></li>
+                <li><a href="Home.html">صفحه اصلی</a></li>
+                <li><a>درباره ما</a></li>
+                <li><a>تماس با ما</a></li>
+                <li><a>محصولات</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- mobile display -->
+    <ul class="sidenav" id="mobile-demo">
+        <li><div class="user-view">
+            <!-- profile-view -->
+            <div class="background" width="100%">
+              <img src="images/Background2.jpg">
+            </div>
+            <a href="Users.html"><img class="responsive-img circle" src="images/Person.png"></a>
+            <a href="#name"><span class="white-text name">Poya Amini</span></a>
+            <a href="#email"><span class="white-text email">aminipoya@gmail.com</span></a>
+            <!--  -->
+          </div></li>
+          <!-- menu -->
+          <li><a href="#!"><i class="material-icons right rtl-icons">settings</i>تنظیمات</a></li>
+          <li><div class="divider"></div></li>
+          <!-- subheader : services -->
+          <li><a class="subheader">خدمات</a></li>
+          <li><a href="Home.HTML"><i class="material-icons right rtl-icons">home</i>صفحه اصلی</a></li>
+          <li><a><i class="material-icons right rtl-icons">group</i>درباره ما</a></li>
+          <li><a><i class="material-icons right rtl-icons">call</i>تماس با ما</a></li>
+          <li><a><i class="material-icons right rtl-icons">shopping_cart</i>محصولات</a></li>
+        </li>
+    </ul>
+    <!-- users list -->
+    <section class="user_list_section" x-init="getUsers()">
+      <!-- search box -->
+      <div class="input-field container">
+        <input id="search" type="text" class="validate">
+        <label for="search">
+            <a><i class="material-icons pos-rel top-10">search</i></a>جستجو
+        </label>
+      </div>
+      <div class="col l2"></div>
+        <!-- Show the list of users in desktop  -->
+        <table class="container hide-on-med-and-down">
+            <thead>
+              <tr>
+                  <th>ردیف</th>
+                  <th>نام و نام خانوادگی</th>
+                  <th>Gmail</th>
+                  <th>آدرس</th>
+                  <th></th>
+              </tr>
+            </thead>
+            <tbody class="desktop_table_body">
+                <template x-for="user in users">
+                  <tr>
+                    <td x-text = "user.id"></td>
+                    <td x-text = "user.name"></td>
+                    <td x-text = "user.email"></td>
+                    <td x-text = "user.address.city"></td>
+                    <td><i class="material-icons  blue-text darken-1">delete_forever</i>
+                      <i class="material-icons blue-text darken-1">edit</i></td>
+                  </tr>
+                </template>
+            </tbody>
+          </table>
+          <!-- pagination -->
+          <div class="container hide-on-med-and-down">
+            <ul class="pagination">
+              <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+              <li class="active blue darken-1"><a href="#!">1</a></li>
+              <li class="waves-effect"><a href="#!">2</a></li>
+              <li class="waves-effect"><a href="#!">3</a></li>
+              <li class="waves-effect"><a href="#!">4</a></li>
+              <li class="waves-effect"><a href="#!">5</a></li>
+              <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            </ul>
+          </div>
+          
+          <!-- Show the list of users in mobile  -->
+          <ul class="collapsible align-items-center hide-on-med-and-up m-l-20 m-r-20">
+            <template x-for="user in users">
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">account_circle</i>
+                <span x-text="user.name"></span>
+              </div>
+              <div class="collapsible-body">
+                  <div>
+                    <span class="f-bold">Gmail : </span>
+                    <span x-text="user.email"></span>
+                  </div>
+                  <div>
+                    <span class="f-bold">آدرس : </span>
+                    <span x-text="user.address.city+'-'+user.address.street"></span>
+                  </div>
+                  <div class="p-t-10 m-t-10">
+                    <i class="material-icons  blue-text darken-1">delete_forever</i>
+                    <i class="material-icons blue-text darken-1">edit</i>
+                  </div>
+              </div>
+            </li>
+          </template>
+          </ul>
+    </section>
+    <!-- New user registration form -->
+    <div class="add_user_modal_back" x-bind:class="{'display-none' : !ShowModal}" x-on:click="ShowModal = false"></div>
+    <div class="add_user_modal container transition-all-ease-0_5" x-bind:class="{'show' : ShowModal}">
+        <div class="row p-t-10 p-b-10 p-r-40 p-l-40 center">
+            <h5>
+              <i class="material-icons m-r-10 m-l-10 position-relative t-3">person_add</i>افزودن کاربر جدید
+            </h5>
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="first_name" type="text" class="validate">
+                    <label for="first_name">نام را وارد کنید</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">نام خانوادگی را وارد کنید</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                      <input id="email" type="email" class="validate">
+                      <label for="email">Email</label>
+                  </div>
+                </div>
+                <button class="btn-large blue darken-1  waves-light  b-radius float-center" type="submit" name="action">ثبت اطلاعات
+                </button>
+              </form>
+            </div>
+        </div>
+    </div>
+    <!-- -->
+    <!-- Add User Icon-->
+    <section id="Add_button">
+        <div class="p-20 m-20 float-left">
+            <buttun id="Add_user_btn" class="btn-floating btn-large blue darken-1" x-on:click="ShowModal = true">
+              <i class="material-icons">add</i></button>
+        </div>
+    </section>
+</body>
