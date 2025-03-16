@@ -60,8 +60,8 @@
     <!-- users list -->
     <section class="user_list_section" x-init="getUsers()">
       <!-- search box -->
-      <div class="input-field container">
-        <input id="search" type="text" class="validate">
+      <div class="input-field container" x-init="$watch('searchChar', (value) => searching(value))">
+        <input id="search" type="text" class="validate" x-model="searchChar">
         <label for="search">
             <a><i class="material-icons pos-rel top-10">search</i></a>جستجو
         </label>
@@ -79,34 +79,22 @@
               </tr>
             </thead>
             <tbody class="desktop_table_body">
-                <template x-for="user in users">
+                <template x-for="user in pageUsers">
                   <tr>
                     <td x-text = "user.id"></td>
                     <td x-text = "user.name"></td>
                     <td x-text = "user.email"></td>
-                    <td x-text = "user.address.city"></td>
-                    <td><i class="material-icons  blue-text darken-1">delete_forever</i>
+                    <td x-text = "(user.address?.city || ' ') + '-' + (user.address?.street || ' ')"></td>
+                    <td><i class="material-icons  blue-text darken-1" x-on:click="DeleteInfo(user.name)">delete_forever</i>
                       <i class="material-icons blue-text darken-1">edit</i></td>
                   </tr>
                 </template>
             </tbody>
           </table>
-          <!-- pagination -->
-          <div class="container hide-on-med-and-down">
-            <ul class="pagination">
-              <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-              <li class="active blue darken-1"><a href="#!">1</a></li>
-              <li class="waves-effect"><a href="#!">2</a></li>
-              <li class="waves-effect"><a href="#!">3</a></li>
-              <li class="waves-effect"><a href="#!">4</a></li>
-              <li class="waves-effect"><a href="#!">5</a></li>
-              <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            </ul>
-          </div>
-          
+
           <!-- Show the list of users in mobile  -->
           <ul class="collapsible align-items-center hide-on-med-and-up m-l-20 m-r-20">
-            <template x-for="user in users">
+            <template x-for="user in pageUsers">
             <li>
               <div class="collapsible-header">
                 <i class="material-icons">account_circle</i>
@@ -119,7 +107,7 @@
                   </div>
                   <div>
                     <span class="f-bold">آدرس : </span>
-                    <span x-text="user.address.city+'-'+user.address.street"></span>
+                    <span x-text="(user.address?.city || ' ') + '-' + (user.address?.street || ' ')"></span>
                   </div>
                   <div class="p-t-10 m-t-10">
                     <i class="material-icons  blue-text darken-1">delete_forever</i>
@@ -129,9 +117,22 @@
             </li>
           </template>
           </ul>
+
+          <!-- pagination -->
+          <div class="container text-center">
+            <ul class="pagination" dir="ltr">
+              <li><a href="#!" x-on:click="previouspage()"><i class="material-icons">chevron_right</i></a></li>
+                <template x-for="i in pcount">
+                    <li x-bind:class="{'active blue darken-1' : curr == i}" x-on:click = "curr=i ; pagination()">
+                      <a x-text="i" href="#!"></a>
+                    </li>
+                </template>
+              <li><a href="#!" x-on:click="nextpage()"><i class="material-icons">chevron_left</i></a></li>
+            </ul>
+          </div>
     </section>
     <!-- New user registration form -->
-    <div class="add_user_modal_back" x-bind:class="{'display-none' : !ShowModal}" x-on:click="ShowModal = false"></div>
+    <div class="add_user_modal_back" x-show="ShowModal" x-transition x-on:click="ShowModal = false"></div>
     <div class="add_user_modal container transition-all-ease-0_5" x-bind:class="{'show' : ShowModal}">
         <div class="row p-t-10 p-b-10 p-r-40 p-l-40 center">
             <h5>
@@ -141,21 +142,32 @@
               <form class="col s12">
                 <div class="row">
                   <div class="input-field col s6">
-                    <input id="first_name" type="text" class="validate">
+                    <input id="first_name" type="text" class="validate" x-model="firstname">
                     <label for="first_name">نام را وارد کنید</label>
                   </div>
+
                   <div class="input-field col s6">
-                    <input id="last_name" type="text" class="validate">
+                    <input id="last_name" type="text" class="validate" x-model="lastname">
                     <label for="last_name">نام خانوادگی را وارد کنید</label>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="input-field col s12">
-                      <input id="email" type="email" class="validate">
+                      <input id="email" type="email" class="validate" x-model="AddUserInfo.email">
                       <label for="email">Email</label>
                   </div>
                 </div>
-                <button class="btn-large blue darken-1  waves-light  b-radius float-center" type="submit" name="action">ثبت اطلاعات
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="input_text" type="text" data-length="20" x-model="AddUserInfo.address.city">
+                    <label for="input_text">آدرس خود را وارد کنید</label>
+                  </div>
+                </div>
+
+                <button class="btn-large blue darken-1  waves-light  b-radius float-center" type="button" name="action" 
+                    x-on:click="SubmitInfo()" x-bind:disabled = "isloading">ثبت اطلاعات
                 </button>
               </form>
             </div>
