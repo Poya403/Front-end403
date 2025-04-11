@@ -85,8 +85,8 @@
                     <td x-text = "user.name"></td>
                     <td x-text = "user.email"></td>
                     <td x-text = "(user.address?.city || ' ') + '-' + (user.address?.street || ' ')"></td>
-                    <td><i class="material-icons  blue-text darken-1" x-on:click="DeleteInfo(user.name)">delete_forever</i>
-                      <i class="material-icons blue-text darken-1">edit</i></td>
+                    <td><i class="material-icons  blue-text darken-1 rtl-icons" x-on:click="DeleteInfo(user.id,user.name)">delete_forever</i>
+                      <i class="material-icons blue-text darken-1 rtl-icons">edit</i></td>
                   </tr>
                 </template>
             </tbody>
@@ -110,7 +110,7 @@
                     <span x-text="(user.address?.city || ' ') + '-' + (user.address?.street || ' ')"></span>
                   </div>
                   <div class="p-t-10 m-t-10">
-                    <i class="material-icons  blue-text darken-1">delete_forever</i>
+                    <i class="material-icons  blue-text darken-1" x-on:click="DeleteInfo(user.id,user.name)">delete_forever</i>
                     <i class="material-icons blue-text darken-1">edit</i>
                   </div>
               </div>
