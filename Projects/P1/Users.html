@@ -85,8 +85,8 @@
                     <td x-text = "user.name"></td>
                     <td x-text = "user.email"></td>
                     <td x-text = "(user.address?.city || ' ') + '-' + (user.address?.street || ' ')"></td>
-                    <td><i class="material-icons  blue-text darken-1 rtl-icons" x-on:click="DeleteInfo(user.id,user.name)">delete_forever</i>
-                      <i class="material-icons blue-text darken-1 rtl-icons">edit</i></td>
+                    <td><i class="material-icons  blue-text darken-1 rtl-icons" x-on:click="DeleteInfo(user)">delete_forever</i>
+                      <i class="material-icons blue-text darken-1 rtl-icons" x-on:click="GetUserInfoToUpdate(user)">edit</i></td>
                   </tr>
                 </template>
             </tbody>
@@ -110,8 +110,8 @@
                     <span x-text="(user.address?.city || ' ') + '-' + (user.address?.street || ' ')"></span>
                   </div>
                   <div class="p-t-10 m-t-10">
-                    <i class="material-icons  blue-text darken-1" x-on:click="DeleteInfo(user.id,user.name)">delete_forever</i>
-                    <i class="material-icons blue-text darken-1">edit</i>
+                    <i class="material-icons  blue-text darken-1" x-on:click="DeleteInfo(user)">delete_forever</i>
+                    <i class="material-icons blue-text darken-1" x-on:click="GetUserInfoToUpdate(user)">edit</i>
                   </div>
               </div>
             </li>
@@ -136,38 +136,44 @@
     <div class="add_user_modal container transition-all-ease-0_5" x-bind:class="{'show' : ShowModal}">
         <div class="row p-t-10 p-b-10 p-r-40 p-l-40 center">
             <h5>
-              <i class="material-icons m-r-10 m-l-10 position-relative t-3">person_add</i>افزودن کاربر جدید
+              <i class="material-icons m-r-10 m-l-10 position-relative t-3">person_add</i>
+              <span x-text="useridtoedit ? 'ویرایش کاربر' : 'افزودن کاربر'"></span>
             </h5>
             <div class="row">
               <form class="col s12">
                 <div class="row">
                   <div class="input-field col s6">
-                    <input id="first_name" type="text" class="validate" x-model="firstname">
-                    <label for="first_name">نام را وارد کنید</label>
-                  </div>
-
-                  <div class="input-field col s6">
-                    <input id="last_name" type="text" class="validate" x-model="lastname">
-                    <label for="last_name">نام خانوادگی را وارد کنید</label>
+                    <input id="full_name" type="text" class="validate" x-model="UserInfo.name">
+                    <label for="full_name">نام و نام خانوادگی را وارد کنید</label>
                   </div>
                 </div>
-
                 <div class="row">
-                  <div class="input-field col s12">
-                      <input id="email" type="email" class="validate" x-model="AddUserInfo.email">
+                  <div class="input-field col s6">
+                      <input id="email" type="email" class="validate" x-model="UserInfo.email">
                       <label for="email">Email</label>
                   </div>
                 </div>
+                <label for="input_text float-right"> لطفا آدرس خود را وارد کنید </label>
 
                 <div class="row">
-                  <div class="input-field col s12">
-                    <input id="input_text" type="text" data-length="20" x-model="AddUserInfo.address.city">
-                    <label for="input_text">آدرس خود را وارد کنید</label>
+                  <div class="input-field col s4">
+                    <input id="input_text" type="text" data-length="20" x-model="UserInfo.address.street">
+                    <label for="input_text">نام خیابان</label>
+                  </div>
+
+                  <div class="input-field col s4">
+                    <input id="input_text" type="text" data-length="20" x-model="UserInfo.address.city">
+                    <label for="input_text">نام شهر</label>
+                  </div>
+
+                  <div class="input-field col s4">
+                    <input id="input_text" type="text" data-length="20" x-model="UserInfo.address.zipcode">
+                    <label for="input_text">zipcode</label>
                   </div>
                 </div>
 
                 <button class="btn-large blue darken-1  waves-light  b-radius float-center" type="button" name="action" 
-                    x-on:click="SubmitInfo()" x-bind:disabled = "isloading">ثبت اطلاعات
+                    x-on:click="useridtoedit ? UpdateUserInfo() : AddUserInfo()" x-bind:disabled = "isloading">ثبت اطلاعات
                 </button>
               </form>
             </div>
@@ -177,7 +183,8 @@
     <!-- Add User Icon-->
     <section id="Add_button">
         <div class="p-20 m-20 float-left">
-            <buttun id="Add_user_btn" class="btn-floating btn-large blue darken-1" x-on:click="ShowModal = true">
+            <buttun id="Add_user_btn" class="btn-floating btn-large blue darken-1 float-right"
+               x-on:click="ShowModal = true;  useridtoedit = null; ResetInfo();">
               <i class="material-icons">add</i></button>
         </div>
     </section>

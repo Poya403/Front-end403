@@ -1484,8 +1484,6 @@
 .overflow-hidden { overflow: hidden;}
 .overflow-scroll { overflow: scroll; }
 
-.float-right{ float: right; }
-
 /* font */
 .f-bold{ font: bold; }
 .no-border{ border: none; }
